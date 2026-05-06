@@ -7,9 +7,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
-fun TelaConfiguracao() {
+fun TelaConfiguracao(
+    navController: NavController
+) {
 
     // Estados da tela salvos mesmo após rotação
     var timeA by rememberSaveable { mutableStateOf("") }
@@ -138,7 +141,10 @@ fun TelaConfiguracao() {
 
                         // Limpa erro
                         mensagemErro = ""
-                        mostrarResumo = true
+                        // Navega para TelaResumo
+                        navController.navigate(
+                            "resumo/$timeA/$timeB/$golsAInt/$golsBInt"
+                        )
                     }
                 }
             ) {
