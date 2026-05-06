@@ -32,7 +32,7 @@ fun AppNavigation() {
     // Controla a navegação
     val navController = rememberNavController()
 
-   // Aplica rotas
+    // Aplica rotas
     NavHost(
         navController = navController,
         startDestination = "configuracao"
@@ -59,6 +59,31 @@ fun AppNavigation() {
 
             // Chama TelaResumo
             TelaResumo(
+                navController = navController,
+                timeA = timeA,
+                timeB = timeB,
+                golsA = golsA,
+                golsB = golsB
+            )
+        }
+        // Rota da TelaResultadoFinal
+        composable(
+            route = "resultado/{timeA}/{timeB}/{golsA}/{golsB}",
+            arguments = listOf(
+                navArgument("timeA") { type = NavType.StringType },
+                navArgument("timeB") { type = NavType.StringType },
+                navArgument("golsA") { type = NavType.IntType },
+                navArgument("golsB") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+
+            val timeA = backStackEntry.arguments?.getString("timeA") ?: ""
+            val timeB = backStackEntry.arguments?.getString("timeB") ?: ""
+            val golsA = backStackEntry.arguments?.getInt("golsA") ?: 0
+            val golsB = backStackEntry.arguments?.getInt("golsB") ?: 0
+
+            TelaResultadoFinal(
+                navController = navController,
                 timeA = timeA,
                 timeB = timeB,
                 golsA = golsA,

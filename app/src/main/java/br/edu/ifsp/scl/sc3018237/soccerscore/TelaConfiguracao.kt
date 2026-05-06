@@ -33,6 +33,7 @@ fun TelaConfiguracao(
     if (mostrarResumo) {
 
         TelaResumo(
+            navController = navController,
             timeA = timeA,
             timeB = timeB,
             golsA = golsA.toInt(),

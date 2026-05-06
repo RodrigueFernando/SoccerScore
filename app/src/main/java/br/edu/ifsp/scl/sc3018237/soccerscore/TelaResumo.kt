@@ -7,11 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
 fun TelaResumo(
 
     // Dados recebidos da Tela 1
+    navController: NavController,
     timeA: String,
     timeB: String,
     golsA: Int,
@@ -41,7 +43,11 @@ fun TelaResumo(
         Spacer(modifier = Modifier.height(16.dp))
 
 
-        Button(onClick = {}) {
+        Button(onClick = {
+            navController.navigate(
+                "resultado/$timeA/$timeB/$golsA/$golsB"
+            )
+        }) {
 
             Text("Confirmar Resultado")
         }
@@ -49,7 +55,9 @@ fun TelaResumo(
         Spacer(modifier = Modifier.height(8.dp))
 
         // Botão para voltar e editar os dados
-        Button(onClick = {}) {
+        Button(onClick = {
+            navController.popBackStack()
+        }) {
 
             Text("Editar")
         }
