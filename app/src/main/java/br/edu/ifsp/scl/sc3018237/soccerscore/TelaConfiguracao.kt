@@ -21,117 +21,135 @@ fun TelaConfiguracao() {
     var mensagemErro by rememberSaveable {
         mutableStateOf("")
     }
+    // Controla a exibição da TelaResumo
+    var mostrarResumo by rememberSaveable {
+        mutableStateOf(false)
+    }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
+    // Se os dados forem válidos, mostra a TelaResumo
+    if (mostrarResumo) {
 
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-
-        Text(text = "Configuração da Partida",style = MaterialTheme.typography.titleLarge)
-
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Campo para nome do Time A
-        OutlinedTextField(
-            value = timeA,
-            onValueChange = {
-                timeA = it
-            },
-            label = {
-                Text("Nome do Time A")
-            }
+        TelaResumo(
+            timeA = timeA,
+            timeB = timeB,
+            golsA = golsA.toInt(),
+            golsB = golsB.toInt()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+    } else {
 
-        // Campo para nome do Time B
-        OutlinedTextField(
-            value = timeB,
-            onValueChange = {
-                timeB = it
-            },
-            label = {
-                Text("Nome do Time B")
-            }
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Campo para gols do Time A
-        OutlinedTextField(
-            value = golsA,
-            onValueChange = {
-                golsA = it
-            },
-            label = {
-                Text("Gols do Time A")
-            }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Campo para gols do Time B
-        OutlinedTextField(
-            value = golsB,
-            onValueChange = {
-                golsB = it
-            },
-            label = {
-                Text("Gols do Time B")
-            }
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = {
-
-                // String para Int
-                val golsAInt = golsA.toIntOrNull()
-                val golsBInt = golsB.toIntOrNull()
-
-                // Verifica campos vazios
-                if (
-                    timeA.isBlank() ||
-                    timeB.isBlank() ||
-                    golsA.isBlank() ||
-                    golsB.isBlank()
-                ) {
-
-                    mensagemErro =
-                        "Preencha todos os campos."
-
-                }
-                // Verifica números inválidos
-                else if (
-                    golsAInt == null ||
-                    golsBInt == null ||
-                    golsAInt < 0 ||
-                    golsBInt < 0
-                ) {
-
-                    mensagemErro =
-                        "Os gols devem ser números válidos."
-
-                } else {
-
-                    // Limpa erro
-                    mensagemErro = ""
-                }
-            }
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
 
-            Text("Ver Resultado")
+            Text(text = "Configuração da Partida", style = MaterialTheme.typography.titleLarge)
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Campo para nome do Time A
+            OutlinedTextField(
+                value = timeA,
+                onValueChange = {
+                    timeA = it
+                },
+                label = {
+                    Text("Nome do Time A")
+                }
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Campo para nome do Time B
+            OutlinedTextField(
+                value = timeB,
+                onValueChange = {
+                    timeB = it
+                },
+                label = {
+                    Text("Nome do Time B")
+                }
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Campo para gols do Time A
+            OutlinedTextField(
+                value = golsA,
+                onValueChange = {
+                    golsA = it
+                },
+                label = {
+                    Text("Gols do Time A")
+                }
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Campo para gols do Time B
+            OutlinedTextField(
+                value = golsB,
+                onValueChange = {
+                    golsB = it
+                },
+                label = {
+                    Text("Gols do Time B")
+                }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+
+                    // String para Int
+                    val golsAInt = golsA.toIntOrNull()
+                    val golsBInt = golsB.toIntOrNull()
+
+                    // Verifica campos vazios
+                    if (
+                        timeA.isBlank() ||
+                        timeB.isBlank() ||
+                        golsA.isBlank() ||
+                        golsB.isBlank()
+                    ) {
+
+                        mensagemErro =
+                            "Preencha todos os campos."
+
+                    }
+                    // Verifica números inválidos
+                    else if (
+                        golsAInt == null ||
+                        golsBInt == null ||
+                        golsAInt < 0 ||
+                        golsBInt < 0
+                    ) {
+
+                        mensagemErro =
+                            "Os gols devem ser números válidos."
+
+                    } else {
+
+                        // Limpa erro
+                        mensagemErro = ""
+                        mostrarResumo = true
+                    }
+                }
+            ) {
+
+                Text("Ver Resultado")
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Exibe mensagem de erro
+            Text(text = mensagemErro)
         }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Exibe mensagem de erro
-        Text(text = mensagemErro)
     }
 }
